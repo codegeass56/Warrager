@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">242 Project</string>
+    <string name="date_format">dd/mm/yyyy</string>
+    <string name="dateLabel"><b>Date of purchase:</b></string>
+    <string name="priceLabel"><b>Total Price (VAT inclusive):</b></string>
+    <string name ="categoryLabel"><b>Product Category:</b></string>
+    <string-array name="itemCategory">
+        <item>Appliances</item>
+        <item>Electronics</item>
+        <item>Gaming</item>
+    </string-array>
+
+</resources>

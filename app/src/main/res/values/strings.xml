@@ -9,5 +9,11 @@
         <item>Electronics</item>
         <item>Gaming</item>
     </string-array>
-
+    <string name ="sellerNameLabel"><b>Seller Name:</b></string>
+    <string name ="sellerPhoneLabel"><b>Seller Phone:</b></string>
+    <string name ="sellerEmailLabel"><b>Seller Email:</b></string>
+    <string name="priceHint">Product Price</string>
+    <string name="nameHint">Name of the seller</string>
+    <string name="numberHint">Phone number of the seller</string>
+    <string name="emailHint">Email Address of the seller</string>
 </resources>

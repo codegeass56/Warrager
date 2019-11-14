@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
             month++;
-            String date = day+"/"+month+"//"+year;
+            String date = day+"/"+month+"/"+year;
             date_tv.setText(date);
         }
     };

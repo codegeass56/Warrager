@@ -45,8 +45,76 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="85dp"
         android:layout_toEndOf="@+id/priceLabel"
-        android:hint="Price"
+        android:hint="@string/priceHint"
         android:inputType="numberDecimal"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/sellernameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/camera"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="97dp"
+        android:layout_toEndOf="@+id/sellername_tv"
+        android:hint="@string/nameHint"
+        android:inputType="text"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/selleremailET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sellernameET"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="99dp"
+        android:layout_toEndOf="@+id/selleremail_tv"
+        android:hint="@string/emailHint"
+        android:inputType="textEmailAddress"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/sellerphoneET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selleremailET"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="97dp"
+        android:layout_toEndOf="@+id/sellerphone_tv"
+        android:hint="@string/numberHint"
+        android:inputType="phone"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/productnameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sellerphoneET"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="98dp"
+        android:layout_toEndOf="@+id/sellerphone_tv"
+        android:hint="@string/productNameHint"
+        android:inputType="text"
         android:paddingTop="0dp"
         android:paddingBottom="5dp"
         android:textSize="14sp" />
@@ -60,6 +128,46 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="29dp"
         android:text="@string/categoryLabel" />
+
+    <TextView
+        android:id="@+id/sellername_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myReceipt"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/sellerNameLabel" />
+
+    <TextView
+        android:id="@+id/selleremail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellername_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/sellerEmailLabel" />
+
+    <TextView
+        android:id="@+id/sellerphone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selleremail_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/sellerPhoneLabel" />
+
+    <TextView
+        android:id="@+id/productname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellerphone_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/productNameLabel" />
 
     <Spinner
         android:id="@+id/categorySpinner"
@@ -78,7 +186,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="31dp"
         android:adjustViewBounds="true"
-        tools:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:src="@android:drawable/ic_menu_gallery" />
 
     <ImageButton
         android:id="@+id/camera"
@@ -91,5 +199,21 @@
         android:adjustViewBounds="true"
         app:srcCompat="@android:drawable/ic_menu_camera"
         tools:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <Button
+        android:id="@+id/addwarrantybt"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productnameET"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="282dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="0dp"
+        android:text="Add Warranty"
+        android:textAllCaps="false"
+        android:textSize="14sp" />
 
 </RelativeLayout>

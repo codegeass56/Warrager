@@ -3,16 +3,16 @@
     <string name="date_format">dd/mm/yyyy</string>
     <string name="dateLabel"><b>Date of purchase:</b></string>
     <string name="priceLabel"><b>Total Price (VAT inclusive):</b></string>
-    <string name ="categoryLabel"><b>Product Category:</b></string>
+    <string name="categoryLabel"><b>Product Category:</b></string>
     <string-array name="itemCategory">
         <item>Appliances</item>
         <item>Electronics</item>
         <item>Gaming</item>
     </string-array>
-    <string name ="sellerNameLabel"><b>Seller Name:</b></string>
-    <string name ="sellerPhoneLabel"><b>Seller Phone:</b></string>
-    <string name ="sellerEmailLabel"><b>Seller Email:</b></string>
-    <string name ="productNameLabel"><b>Product Name:</b></string>
+    <string name="sellerNameLabel"><b>Seller Name:</b></string>
+    <string name="sellerPhoneLabel"><b>Seller Phone:</b></string>
+    <string name="sellerEmailLabel"><b>Seller Email:</b></string>
+    <string name="productNameLabel"><b>Product Name:</b></string>
     <string name="priceHint">Product Price</string>
     <string name="nameHint">Name of the seller</string>
     <string name="numberHint">Phone number of the seller</string>

@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==reqCode)
         {
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
+            Bundle extras = Objects.requireNonNull(data).getExtras();
+            Bitmap bitmap = (Bitmap) Objects.requireNonNull(extras).get("data");
             myReceipt.setImageBitmap(bitmap);
         }
     }

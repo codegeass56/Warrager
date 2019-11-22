@@ -142,23 +142,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     //implement array adapter for listview
-    class InformationRetrieval extends AsyncTask< >{ //params, progress, result
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            //get information from cloud
-            //store into class
-            //decrypt each attribute
-            //arraylist.clear()
-            //add to array list
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            //set adapter
-        }
-    }
+//    class InformationRetrieval extends AsyncTask< >{ //params, progress, result
+//
+//        @Override
+//        protected Object doInBackground(Object[] objects) {
+//            //get information from cloud
+//            //store into class
+//            //decrypt each attribute
+//            //arraylist.clear()
+//            //add to array list
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Object o) {
+//            super.onPostExecute(o);
+//            //set adapter
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

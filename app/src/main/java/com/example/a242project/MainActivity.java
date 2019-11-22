@@ -37,7 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
-//Commit Test (Suvansh)
+
 public class MainActivity extends AppCompatActivity {
     TextView date_tv;
     Button addwarrantybt;

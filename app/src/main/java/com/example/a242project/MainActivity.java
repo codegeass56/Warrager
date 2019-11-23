@@ -1,5 +1,4 @@
 package com.example.a242project;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -14,6 +13,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,23 +27,30 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Constants;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 public class MainActivity extends AppCompatActivity {
     TextView date_tv;
@@ -54,15 +62,15 @@ public class MainActivity extends AppCompatActivity {
     ImageButton camera;
     Uri imageUri;
     static final int reqCode = 1;
-    ListView warrantylistview;
-    ArrayList<Warranty> warrantyList;
     DatabaseReference warranty;
+    String AES = "AES";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         myReceipt =  findViewById(R.id.myReceipt);
         camera = findViewById(R.id.camera);
         date_tv = findViewById(R.id.date_tv);
@@ -74,15 +82,13 @@ public class MainActivity extends AppCompatActivity {
         productnameET = findViewById(R.id.productnameET);
         addwarrantybt = findViewById(R.id.addwarrantybt);
         warranty = FirebaseDatabase.getInstance().getReference().child("Warranty");
-
         date_tv.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
                         android.R.style.Theme_Holo_Dialog_MinWidth,
                         dateSetListener,
@@ -92,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-            month++;
-            String date = day+"/"+month+"/"+year;
-            date_tv.setText(date);
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
+                String date = day+"/"+month+"/"+year;
+                date_tv.setText(date);
             }
         };
         ArrayAdapter<CharSequence> spinnerAdapt = ArrayAdapter.createFromResource(
@@ -105,15 +111,14 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item);
         spinnerAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapt);
-
         //set camera on click
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED)
+                        || ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)
                 {
                     //Toast.makeText(getApplicationContext(), "onRequest",Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, reqCode);
@@ -124,8 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(capture,reqCode);
                     }
                 }
-        }});
-
+            }});
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,22 +150,37 @@ public class MainActivity extends AppCompatActivity {
                 Warranty obj = new Warranty(sellernameET.getText().toString(), sellerphoneET.getText().toString(), selleremailET.getText().toString(),
                         date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString(), "");
                 //encrypt object
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
+                try {
+                    Warranty encryptedObj = encrypt(obj,"zxcasdqwe");
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = user.getUid();
+                    DatabaseReference warrantyRef = FirebaseDatabase
+                            .getInstance()
+                            .getReference("Warranty")
+                            .child(uid);
+                    DatabaseReference pushRef = warrantyRef.push();
+                    String pushId = pushRef.getKey();
+                    obj.setPushid(pushId);
+                    pushRef.setValue(obj);
+                    openWarrantyList();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                }
 
-                DatabaseReference warrantyRef = FirebaseDatabase
-                        .getInstance()
-                        .getReference("Warranty")
-                        .child(uid);
-
-                DatabaseReference pushRef = warrantyRef.push();
-                String pushId = pushRef.getKey();
-                obj.setPushid(pushId);
-                pushRef.setValue(obj);
-                openWarrantyList();
             }
         });
     }
+    //implement array adapter for listview
 
 
     @Override
@@ -183,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
         return Uri.parse(path);
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -192,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
                 // main logic
                 Intent capture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(capture.resolveActivity(getPackageManager())!=null) {
-
                     startActivityForResult(capture,reqCode);
                 }
             }
@@ -209,9 +226,57 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0, paint);
         return convertedBitmap;
     }
-
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);
     }
+
+    private Warranty encrypt(Warranty Data, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        SecretKeySpec key = generateKey(password);
+        Cipher c = Cipher.getInstance(AES);
+        c.init(Cipher.ENCRYPT_MODE,key);
+
+
+        byte[] encVal = c.doFinal(Data.getSellerName().getBytes());
+        String encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setSellerName(encryptedValue);
+
+        encVal = c.doFinal(Data.getSellerPhone().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setSellerPhone(encryptedValue);
+
+        encVal = c.doFinal(Data.getSellerEmail().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setSellerEmail(encryptedValue);
+
+        encVal = c.doFinal(Data.getDateOfPurchase().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setDateOfPurchase(encryptedValue);
+
+        encVal = c.doFinal(Data.getProductName().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setProductName(encryptedValue);
+
+        encVal = c.doFinal(Data.getProductCategory().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setProductCategory(encryptedValue);
+
+        encVal = c.doFinal(Data.getProductPrice().getBytes());
+        encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        Data.setProductPrice(encryptedValue);
+
+        return Data;
+
+    }
+
+    private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] bytes = password.getBytes("UTF-8");
+        digest.update(bytes, 0, bytes.length);
+        byte[] key = digest.digest();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        return secretKeySpec;
+
+    }
+
 }

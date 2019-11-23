@@ -41,7 +41,7 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
 
         Warranty warranty = new Warranty(sellerName,sellerPhone,sellerEmail,dateOfPurchase,productName,productCategory,productPrice,pushid);
 
-        LayoutInflater inflater = LayoutInflater.from(mContext); //Context returns null, crashes here, need to make sure context is not null
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);
 
         TextView tvSellerName = (TextView) convertView.findViewById(R.id.etSellerName);

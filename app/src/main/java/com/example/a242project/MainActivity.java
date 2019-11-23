@@ -10,39 +10,36 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Constants;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -52,6 +49,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
     TextView date_tv;
     Button addwarrantybt;
@@ -82,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         productnameET = findViewById(R.id.productnameET);
         addwarrantybt = findViewById(R.id.addwarrantybt);
         warranty = FirebaseDatabase.getInstance().getReference().child("Warranty");
+
         date_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        //String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice
+
         addwarrantybt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,20 +159,10 @@ public class MainActivity extends AppCompatActivity {
                             .child(uid);
                     DatabaseReference pushRef = warrantyRef.push();
                     String pushId = pushRef.getKey();
-                    obj.setPushid(pushId);
-                    pushRef.setValue(obj);
+                    encryptedObj.setPushid(pushId);
+                    pushRef.setValue(encryptedObj);
                     openWarrantyList();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
-                } catch (BadPaddingException e) {
-                    e.printStackTrace();
-                } catch (IllegalBlockSizeException e) {
+                } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
                     e.printStackTrace();
                 }
 
@@ -188,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==reqCode)
         {
-            Bundle extras = Objects.requireNonNull(data).getExtras();
+            Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) Objects.requireNonNull(extras).get("data");
             //Bitmap converted = bitmap.copy(Bitmap.Config.ARGB_8888, false);
             Bitmap converted = convert(bitmap, Bitmap.Config.ARGB_8888);

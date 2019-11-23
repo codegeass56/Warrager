@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/dateLabel" />
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="18dp"
+        android:layout_toEndOf="@+id/dateLabel"
+        android:hint="@string/date_format" />
+
+    <TextView
+        android:id="@+id/priceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/priceLabel" />
+
+    <TextView
+        android:id="@+id/priceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_tv"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="85dp"
+        android:layout_toEndOf="@+id/priceLabel"
+        android:hint="@string/priceHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/sellernameDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myReceipt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="170dp"
+        android:layout_toEndOf="@+id/sellername_tv"
+        android:hint="@string/nameHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/selleremailDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sellernameDisplay"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="100dp"
+        android:layout_toEndOf="@+id/selleremail_tv"
+        android:hint="@string/emailHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/sellerphoneDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selleremailDisplay"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="106dp"
+        android:layout_toEndOf="@+id/sellerphone_tv"
+        android:hint="@string/numberHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/productnameDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sellerphoneDisplay"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="96dp"
+        android:layout_toEndOf="@+id/productname_tv"
+        android:hint="@string/productNameHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/priceLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="29dp"
+        android:text="@string/categoryLabel" />
+
+    <TextView
+        android:id="@+id/sellername_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myReceipt"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/sellerNameLabel" />
+
+    <TextView
+        android:id="@+id/selleremail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellername_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/sellerEmailLabel" />
+
+    <TextView
+        android:id="@+id/sellerphone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selleremail_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/sellerPhoneLabel" />
+
+    <TextView
+        android:id="@+id/productname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellerphone_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/productNameLabel" />
+
+    <TextView
+        android:id="@+id/categorySpinnerTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/priceTv"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="82dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
+        android:layout_toEndOf="@+id/categoryLabel" />
+
+    <ImageView
+        android:id="@+id/myReceipt"
+        android:layout_width="166dp"
+        android:layout_height="334dp"
+        android:layout_below="@+id/categoryLabel"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:src="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryLabel"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="309dp"
+        android:layout_toEndOf="@+id/myReceipt"
+        android:adjustViewBounds="true"
+        android:text="Your Receipt" />
+
+</RelativeLayout>

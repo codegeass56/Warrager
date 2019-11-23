@@ -5,45 +5,45 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/etSellerName"
+        android:id="@+id/tvSellerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seller Name" />
 
     <TextView
-        android:id="@+id/etSellerPhone"
+        android:id="@+id/tvSellerPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seller Phone"
-        android:layout_below="@id/etSellerName"/>
+        android:layout_below="@id/tvSellerName"/>
 
     <TextView
-        android:id="@+id/etSellerEmail"
+        android:id="@+id/tvSellerEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seller Email"
-        android:layout_below="@id/etSellerPhone"/>
+        android:layout_below="@id/tvSellerPhone"/>
 
     <TextView
-        android:id="@+id/etDateOfPurchase"
+        android:id="@+id/tvDateOfPurchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date of Purchase"
-        android:layout_below="@id/etSellerEmail"/>
+        android:layout_below="@id/tvSellerEmail"/>
 
     <TextView
-        android:id="@+id/etProductName"
+        android:id="@+id/tvProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product Name"
-        android:layout_below="@id/etDateOfPurchase"/>
+        android:layout_below="@id/tvDateOfPurchase"/>
 
     <TextView
         android:id="@+id/etProductCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product Category"
-        android:layout_below="@id/etProductName"/>
+        android:layout_below="@id/tvProductName"/>
 
     <TextView
         android:id="@+id/etProductPrice"

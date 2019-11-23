@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
+@SuppressWarnings("ALL")
 class WarrantyListAdapter extends ArrayAdapter<Warranty> {
     private static final String TAG = "WarrantyListAdapter";
     private Context mContext;
-    int mResource;
+    private int mResource;
 
-    public WarrantyListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Warranty> objects) {
+    WarrantyListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Warranty> objects) {
         super(context, resource, objects);
         mContext = this.getContext();
         Log.d(TAG, "getView: " + mContext);
@@ -44,11 +44,11 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);
 
-        TextView tvSellerName = (TextView) convertView.findViewById(R.id.etSellerName);
-        TextView tvSellerPhone = (TextView) convertView.findViewById(R.id.etSellerPhone);
-        TextView tvSellerEmail = (TextView) convertView.findViewById(R.id.etSellerEmail);
-        TextView tvDateOfPurchase = (TextView) convertView.findViewById(R.id.etDateOfPurchase);
-        TextView tvProductName = (TextView) convertView.findViewById(R.id.etProductName);
+        TextView tvSellerName = (TextView) convertView.findViewById(R.id.tvSellerName);
+        TextView tvSellerPhone = (TextView) convertView.findViewById(R.id.tvSellerPhone);
+        TextView tvSellerEmail = (TextView) convertView.findViewById(R.id.tvSellerEmail);
+        TextView tvDateOfPurchase = (TextView) convertView.findViewById(R.id.tvDateOfPurchase);
+        TextView tvProductName = (TextView) convertView.findViewById(R.id.tvProductName);
         TextView tvCategory = (TextView) convertView.findViewById(R.id.etProductCategory);
         TextView tvProductPrice = (TextView) convertView.findViewById(R.id.etProductPrice);
 

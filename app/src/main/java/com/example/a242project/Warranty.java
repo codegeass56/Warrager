@@ -1,9 +1,10 @@
 package com.example.a242project;
 
-public class Warranty {
-    String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
+@SuppressWarnings("ALL")
+class Warranty {
+    public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
 
-    public Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
+    Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
     {
         this.sellerEmail = sellerEmail;
         this.dateOfPurchase = dateOfPurchase;

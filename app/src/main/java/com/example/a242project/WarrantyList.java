@@ -1,28 +1,19 @@
 package com.example.a242project;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.SnapshotParser;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -34,16 +25,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -51,6 +42,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+@SuppressWarnings("ALL")
 public class WarrantyList extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -58,12 +50,14 @@ public class WarrantyList extends AppCompatActivity {
     private Button goToAddWarranty;
     private GoogleSignInClient mGoogleSignInClient;
     private String AES = "AES";
-
+    private TextView emptyListMessage;
     private Context mContext;
+    private ArrayList<Warranty> warrantyList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warranty_list);
+        emptyListMessage = findViewById(R.id.emptyListMessage);
         mContext = this;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder()
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -73,53 +67,47 @@ public class WarrantyList extends AppCompatActivity {
         logout = (Button) findViewById(R.id.Logout);
         goToAddWarranty = (Button) findViewById(R.id.goToAddWarranty);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        ListView mListView = (ListView) findViewById(R.id.list);
+        String uid = Objects.requireNonNull(user).getUid();
+        ListView mListView = (ListView) findViewById(R.id.mListView);
 
         DatabaseReference warrantyRef = FirebaseDatabase
                 .getInstance()
                 .getReference("Warranty")
                 .child(uid);
 
-        ArrayList<Warranty> warrantyList = new ArrayList<>();
+        warrantyList = new ArrayList<>();
         warrantyRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //Decrypt
                     try {
                         Map<String, Object> warranty = (Map<String, Object>) dataSnapshot.getValue();
 
-                        for (String childKey: warranty.keySet()) {
-                            Map<String, Object> currentWarrantyObject = (Map<String, Object>) warranty.get(childKey);
-                            Warranty currentWarranty = new Warranty(currentWarrantyObject.get("sellerName").toString(), currentWarrantyObject.get("sellerPhone").toString(),
-                                    currentWarrantyObject.get("sellerEmail").toString(),currentWarrantyObject.get("dateOfPurchase").toString(), currentWarrantyObject.get("productName").toString(),
-                                    currentWarrantyObject.get("productCategory").toString(),currentWarrantyObject.get("productPrice").toString(),currentWarrantyObject.get("pushid").toString());
-                            Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
-                        warrantyList.add(decryptedWarranty);
+                        if(warranty != null) {
+                            emptyListMessage.setVisibility(View.GONE);
+                            for (String childKey : warranty.keySet()) {
+                                Map<String, Object> currentWarrantyObject = (Map<String, Object>) warranty.get(childKey);
+                                Warranty currentWarranty = new Warranty(currentWarrantyObject.get("sellerName").toString(), currentWarrantyObject.get("sellerPhone").toString(),
+                                        currentWarrantyObject.get("sellerEmail").toString(), currentWarrantyObject.get("dateOfPurchase").toString(), currentWarrantyObject.get("productName").toString(),
+                                        currentWarrantyObject.get("productCategory").toString(), currentWarrantyObject.get("productPrice").toString(), currentWarrantyObject.get("pushid").toString());
+                                Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
+                                warrantyList.add(decryptedWarranty);
+                            }
+                            Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
+                            WarrantyListAdapter adapter = new WarrantyListAdapter(mContext, R.layout.adapteritemlist, warrantyList);
+                            mListView.setAdapter(adapter);
                         }
-                        Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
-                        WarrantyListAdapter adapter = new WarrantyListAdapter( mContext, R.layout.adapteritemlist, warrantyList);
-                        mListView.setAdapter(adapter);
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
+                        else {
+                            emptyListMessage.setVisibility(View.VISIBLE);
+                        }
+                    } catch (NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) { }
         });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +120,21 @@ public class WarrantyList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openMainActivity();
+            }
+        });
+        //String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent warrantyDetails = new Intent(getApplicationContext(), selectedWarranty.class);
+                warrantyDetails.putExtra("sellername",warrantyList.get((int)id).getSellerName());
+                warrantyDetails.putExtra("sellerphone",warrantyList.get((int)id).getSellerPhone());
+                warrantyDetails.putExtra("selleremail",warrantyList.get((int)id).getSellerEmail());
+                warrantyDetails.putExtra("dateofpurchase",warrantyList.get((int)id).getDateOfPurchase());
+                warrantyDetails.putExtra("productname",warrantyList.get((int)id).getProductName());
+                warrantyDetails.putExtra("productcategory",warrantyList.get((int)id).getProductCategory());
+                warrantyDetails.putExtra("productprice",warrantyList.get((int)id).getProductPrice());
+                startActivity(warrantyDetails);
             }
         });
     }
@@ -203,13 +206,12 @@ public class WarrantyList extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] bytes = password.getBytes("UTF-8");
+        byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
         digest.update(bytes, 0, bytes.length);
         byte[] key = digest.digest();
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-        return secretKeySpec;
+        return new SecretKeySpec(key, "AES");
 
     }
 }

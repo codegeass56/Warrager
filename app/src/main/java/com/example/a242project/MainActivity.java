@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //implement array adapter for listview
 
 
     @Override

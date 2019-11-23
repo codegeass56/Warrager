@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/etSellerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seller Name" />
+
+    <TextView
+        android:id="@+id/etSellerPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seller Phone"
+        android:layout_below="@id/etSellerName"/>
+
+    <TextView
+        android:id="@+id/etSellerEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seller Email"
+        android:layout_below="@id/etSellerPhone"/>
+
+    <TextView
+        android:id="@+id/etDateOfPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Purchase"
+        android:layout_below="@id/etSellerEmail"/>
+
+    <TextView
+        android:id="@+id/etProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name"
+        android:layout_below="@id/etDateOfPurchase"/>
+
+    <TextView
+        android:id="@+id/etProductCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Category"
+        android:layout_below="@id/etProductName"/>
+
+    <TextView
+        android:id="@+id/etProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Price"
+        android:layout_below="@id/etProductCategory"/>
+
+
+</RelativeLayout>

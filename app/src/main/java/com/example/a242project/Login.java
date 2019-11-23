@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
                             Log.d("S", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            openMainActivity();
+                            openWarrantyList();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("F2", "signInWithCredential:failure", task.getException());
@@ -96,8 +96,8 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-    private void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class );
+    private void openWarrantyList() {
+        Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);
     }
 }

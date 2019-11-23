@@ -27,6 +27,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.Constants;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     static final int reqCode = 1;
     ListView warrantylistview;
     ArrayList<Warranty> warrantyList;
+    DatabaseReference warranty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         date_tv = findViewById(R.id.date_tv);
         priceEditText = findViewById(R.id.priceEditText);
         categorySpinner = findViewById(R.id.categorySpinner);
-        warrantylistview = findViewById(R.id.warrantylistview);
         selleremailET = findViewById(R.id.selleremailET);
         sellerphoneET = findViewById(R.id.sellerphoneET);
         sellernameET = findViewById(R.id.sellernameET);
         productnameET = findViewById(R.id.productnameET);
         addwarrantybt = findViewById(R.id.addwarrantybt);
+        warranty = FirebaseDatabase.getInstance().getReference().child("Warranty");
 
         date_tv.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -136,29 +144,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Warranty obj = new Warranty(sellernameET.getText().toString(), sellerphoneET.getText().toString(), selleremailET.getText().toString(),
-                        date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString());
+                        date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString(), "");
                 //encrypt object
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+
+                DatabaseReference warrantyRef = FirebaseDatabase
+                        .getInstance()
+                        .getReference("Warranty")
+                        .child(uid);
+
+                DatabaseReference pushRef = warrantyRef.push();
+                String pushId = pushRef.getKey();
+                obj.setPushid(pushId);
+                pushRef.setValue(obj);
+                openWarrantyList();
             }
         });
     }
     //implement array adapter for listview
-//    class InformationRetrieval extends AsyncTask< >{ //params, progress, result
-//
-//        @Override
-//        protected Object doInBackground(Object[] objects) {
-//            //get information from cloud
-//            //store into class
-//            //decrypt each attribute
-//            //arraylist.clear()
-//            //add to array list
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Object o) {
-//            super.onPostExecute(o);
-//            //set adapter
-//        }
-//    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -188,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 // main logic
                 Intent capture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(capture.resolveActivity(getPackageManager())!=null) {
+
                     startActivityForResult(capture,reqCode);
                 }
             }
@@ -203,5 +209,10 @@ public class MainActivity extends AppCompatActivity {
         paint.setColor(Color.BLACK);
         canvas.drawBitmap(bitmap, 0, 0, paint);
         return convertedBitmap;
+    }
+
+    private void openWarrantyList() {
+        Intent intent = new Intent(this, WarrantyList.class );
+        startActivity(intent);
     }
 }

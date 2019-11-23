@@ -1,9 +1,9 @@
 package com.example.a242project;
 
 public class Warranty {
-    String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice;
+    String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
 
-    public Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice)
+    public Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
     {
         this.sellerEmail = sellerEmail;
         this.dateOfPurchase = dateOfPurchase;
@@ -12,6 +12,7 @@ public class Warranty {
         this.productName = productName;
         this.productPrice = productPrice;
         this.sellerPhone = sellerPhone;
+        this.pushid = pushid;
     }
 
 
@@ -69,5 +70,13 @@ public class Warranty {
 
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public String getPushid() {
+        return pushid;
+    }
+
+    public void setPushid(String pushid) {
+        this.pushid = pushid;
     }
 }

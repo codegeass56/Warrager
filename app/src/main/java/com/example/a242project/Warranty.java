@@ -7,7 +7,7 @@ class Warranty {
     public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
 
     public Bitmap receipt;
-
+    Warranty(){}
     Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
     {
         this.sellerEmail = sellerEmail;

@@ -40,7 +40,7 @@
         android:paddingEnd="0dp"
         android:layout_marginEnd="7dp"
         android:text="Logout"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <ImageButton
         android:id="@+id/Logout"

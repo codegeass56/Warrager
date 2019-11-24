@@ -1,8 +1,12 @@
 package com.example.a242project;
 
+import android.graphics.Bitmap;
+
 @SuppressWarnings("ALL")
 class Warranty {
     public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
+
+    public Bitmap receipt;
 
     Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
     {
@@ -16,6 +20,13 @@ class Warranty {
         this.pushid = pushid;
     }
 
+    public Bitmap getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Bitmap receipt) {
+        this.receipt = receipt;
+    }
 
     public String getSellerName() {
         return sellerName;

@@ -49,8 +49,8 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         TextView tvSellerEmail = (TextView) convertView.findViewById(R.id.tvSellerEmail);
         TextView tvDateOfPurchase = (TextView) convertView.findViewById(R.id.tvDateOfPurchase);
         TextView tvProductName = (TextView) convertView.findViewById(R.id.tvProductName);
-        TextView tvCategory = (TextView) convertView.findViewById(R.id.etProductCategory);
-        TextView tvProductPrice = (TextView) convertView.findViewById(R.id.etProductPrice);
+        TextView tvCategory = (TextView) convertView.findViewById(R.id.tvProductCategory);
+        TextView tvProductPrice = (TextView) convertView.findViewById(R.id.tvProductPrice);
 
         tvSellerName.setText(sellerName);
         tvSellerPhone.setText(sellerPhone);

@@ -2,21 +2,17 @@ package com.example.a242project;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class selectedWarranty extends AppCompatActivity {
+public class SelectedWarranty extends AppCompatActivity {
     TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.warranty_details);
+        setContentView(R.layout.selected_warranty_details);
 
-        Toast.makeText(getApplicationContext(),"Clicked id: ",Toast.LENGTH_SHORT).show();
         date_tv = findViewById(R.id.date_tv);
         priceTv = findViewById(R.id.priceTv);
         categorySpinnerTv = findViewById(R.id.categorySpinnerTv);

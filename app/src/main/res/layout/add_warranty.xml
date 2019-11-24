@@ -181,37 +181,39 @@
     <ImageView
         android:id="@+id/myReceipt"
         android:layout_width="166dp"
-        android:layout_height="334dp"
+        android:layout_height="234dp"
         android:layout_below="@+id/categoryLabel"
         android:layout_marginStart="10dp"
         android:layout_marginTop="31dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_gallery" />
 
     <ImageButton
         android:id="@+id/camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categoryLabel"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="309dp"
+        android:layout_below="@+id/categorySpinner"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="205dp"
         android:layout_toEndOf="@+id/myReceipt"
         android:adjustViewBounds="true"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        tools:srcCompat="@android:drawable/ic_menu_camera" />
+        android:background="@null"
+        app:srcCompat="@drawable/camera_icon" />
 
     <Button
         android:id="@+id/addwarrantybt"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="58dp"
         android:layout_below="@+id/productnameET"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="282dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="23dp"
         android:text="Add Warranty"
         android:textAllCaps="false"
         android:textSize="14sp" />

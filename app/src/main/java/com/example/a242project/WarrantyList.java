@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +33,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -46,8 +44,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class WarrantyList extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button logout;
-    private Button goToAddWarranty;
+    private ImageButton logout;
+    private ImageButton goToAddWarranty;
     private GoogleSignInClient mGoogleSignInClient;
     private String AES = "AES";
     private TextView emptyListMessage;
@@ -56,7 +54,7 @@ public class WarrantyList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_warranty_list);
+        setContentView(R.layout.warranty_listview);
         emptyListMessage = findViewById(R.id.emptyListMessage);
         mContext = this;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder()
@@ -64,10 +62,10 @@ public class WarrantyList extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
-        logout = (Button) findViewById(R.id.Logout);
-        goToAddWarranty = (Button) findViewById(R.id.goToAddWarranty);
+        logout = findViewById(R.id.Logout);
+        goToAddWarranty = findViewById(R.id.goToAddWarranty);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = Objects.requireNonNull(user).getUid();
+        String uid = user.getUid();
         ListView mListView = (ListView) findViewById(R.id.mListView);
 
         DatabaseReference warrantyRef = FirebaseDatabase
@@ -84,7 +82,7 @@ public class WarrantyList extends AppCompatActivity {
                     try {
                         Map<String, Object> warranty = (Map<String, Object>) dataSnapshot.getValue();
 
-                        if(warranty != null) {
+                        if(warranty!=null) {
                             emptyListMessage.setVisibility(View.GONE);
                             for (String childKey : warranty.keySet()) {
                                 Map<String, Object> currentWarrantyObject = (Map<String, Object>) warranty.get(childKey);
@@ -94,9 +92,23 @@ public class WarrantyList extends AppCompatActivity {
                                 Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
                                 warrantyList.add(decryptedWarranty);
                             }
-                            Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
-                            WarrantyListAdapter adapter = new WarrantyListAdapter(mContext, R.layout.adapteritemlist, warrantyList);
+                            //Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
+                            WarrantyListAdapter adapter = new WarrantyListAdapter(mContext, R.layout.warranty_listitem, warrantyList);
                             mListView.setAdapter(adapter);
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                                    Intent warrantyDetails = new Intent(getApplicationContext(), SelectedWarranty.class);
+                                    warrantyDetails.putExtra("sellername",warrantyList.get((int)id).getSellerName());
+                                    warrantyDetails.putExtra("sellerphone",warrantyList.get((int)id).getSellerPhone());
+                                    warrantyDetails.putExtra("selleremail",warrantyList.get((int)id).getSellerEmail());
+                                    warrantyDetails.putExtra("dateofpurchase",warrantyList.get((int)id).getDateOfPurchase());
+                                    warrantyDetails.putExtra("productname",warrantyList.get((int)id).getProductName());
+                                    warrantyDetails.putExtra("productcategory",warrantyList.get((int)id).getProductCategory());
+                                    warrantyDetails.putExtra("productprice",warrantyList.get((int)id).getProductPrice());
+                                    startActivity(warrantyDetails);
+                                }
+                            });
                         }
                         else {
                             emptyListMessage.setVisibility(View.VISIBLE);
@@ -120,21 +132,6 @@ public class WarrantyList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openMainActivity();
-            }
-        });
-        //String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent warrantyDetails = new Intent(getApplicationContext(), selectedWarranty.class);
-                warrantyDetails.putExtra("sellername",warrantyList.get((int)id).getSellerName());
-                warrantyDetails.putExtra("sellerphone",warrantyList.get((int)id).getSellerPhone());
-                warrantyDetails.putExtra("selleremail",warrantyList.get((int)id).getSellerEmail());
-                warrantyDetails.putExtra("dateofpurchase",warrantyList.get((int)id).getDateOfPurchase());
-                warrantyDetails.putExtra("productname",warrantyList.get((int)id).getProductName());
-                warrantyDetails.putExtra("productcategory",warrantyList.get((int)id).getProductCategory());
-                warrantyDetails.putExtra("productprice",warrantyList.get((int)id).getProductPrice());
-                startActivity(warrantyDetails);
             }
         });
     }
@@ -212,6 +209,5 @@ public class WarrantyList extends AppCompatActivity {
         digest.update(bytes, 0, bytes.length);
         byte[] key = digest.digest();
         return new SecretKeySpec(key, "AES");
-
     }
 }

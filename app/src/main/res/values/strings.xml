@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">242 Project</string>
+    <string name="app_name">Warranty Manager</string>
     <string name="date_format">dd/mm/yyyy</string>
     <string name="dateLabel"><b>Date of purchase:</b></string>
     <string name="priceLabel"><b>Total Price (VAT inclusive):</b></string>
@@ -18,4 +18,5 @@
     <string name="numberHint">Phone number of the seller</string>
     <string name="emailHint">Email Address of the seller</string>
     <string name="productNameHint">Name of the product</string>
+    <string name="emptyMessage">Nothing yet? Try adding!</string>
 </resources>

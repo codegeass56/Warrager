@@ -1,13 +1,14 @@
 package com.example.a242project;
+
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -63,12 +63,10 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference warranty;
     String AES = "AES";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.add_warranty);
         myReceipt =  findViewById(R.id.myReceipt);
         camera = findViewById(R.id.camera);
         date_tv = findViewById(R.id.date_tv);
@@ -119,16 +117,22 @@ public class MainActivity extends AppCompatActivity {
                         || ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED)
                 {
-                    //Toast.makeText(getApplicationContext(), "onRequest",Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, reqCode);
                 }
                 else{
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Images.Media.TITLE, "New Receipt");
+                    values.put(MediaStore.Images.Media.DESCRIPTION, "Warranty Receipt");
+                    imageUri = getContentResolver().insert(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                     Intent capture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    capture.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
                     if(capture.resolveActivity(getPackageManager())!=null) {
                         startActivityForResult(capture,reqCode);
                     }
                 }
             }});
+
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,28 +173,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //implement array adapter for listview
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==reqCode)
-        {
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) Objects.requireNonNull(extras).get("data");
-            //Bitmap converted = bitmap.copy(Bitmap.Config.ARGB_8888, false);
-            Bitmap converted = convert(bitmap, Bitmap.Config.ARGB_8888);
-            myReceipt.setImageBitmap(converted);
-            imageUri = getImageUri(getApplicationContext(), Objects.requireNonNull(bitmap));
-        }
-    }
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
-        return Uri.parse(path);
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -203,18 +186,57 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(getApplicationContext(), "App requires camera and storage permission to scan your receipt",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Manually give camera and storage permission to scan receipts", Toast.LENGTH_SHORT).show();
             }
         }
     }
-    private Bitmap convert(Bitmap bitmap, Bitmap.Config config) {
-        Bitmap convertedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), config);
-        Canvas canvas = new Canvas(convertedBitmap);
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return convertedBitmap;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == reqCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), imageUri);
+                    myReceipt.setImageBitmap(thumbnail);
+                    myReceipt.setRotation(90);
+                    String imageurl = getRealPathFromURI(imageUri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//            Bundle extras = data.getExtras();
+//            Bitmap bitmap = (Bitmap) Objects.requireNonNull(extras).get("data");
+//            //Bitmap converted = bitmap.copy(Bitmap.Config.ARGB_8888, false);
+//            Bitmap converted = convert(bitmap, Bitmap.Config.ARGB_8888);
+//            myReceipt.setImageBitmap(converted);
+//            imageUri = getImageUri(getApplicationContext(), bitmap);
+            }
+        }
     }
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+//    public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
+//        return Uri.parse(path);
+//    }
+
+//    private Bitmap convert(Bitmap bitmap, Bitmap.Config config) {
+//        Bitmap convertedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), config);
+//        Canvas canvas = new Canvas(convertedBitmap);
+//        Paint paint = new Paint();
+//        paint.setColor(Color.BLACK);
+//        canvas.drawBitmap(bitmap, 0, 0, paint);
+//        return convertedBitmap;
+//    }
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);

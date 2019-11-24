@@ -3,7 +3,9 @@ package com.example.a242project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +32,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.google_login);
         loginbtn = findViewById(R.id.login);
         // Configure Google Sign In
         mAuth = FirebaseAuth.getInstance();
@@ -39,9 +41,14 @@ public class Login extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
-        loginbtn.setOnClickListener(v -> signIn());
-
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN);
@@ -60,7 +67,7 @@ public class Login extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("F", "Google sign in failed", e);
+                Toast.makeText(getApplicationContext(),"Sign in failed",Toast.LENGTH_SHORT).show();
                 // ...
             }
         }
@@ -77,11 +84,12 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("S", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             openWarrantyList();
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("F2", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), "Sign in failed",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

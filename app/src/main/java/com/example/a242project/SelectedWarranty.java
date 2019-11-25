@@ -75,13 +75,6 @@ public class SelectedWarranty extends AppCompatActivity {
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ContentValues values = new ContentValues();
-//                values.put(MediaStore.Images.Media.TITLE, "New Receipt");
-//                values.put(MediaStore.Images.Media.DESCRIPTION, "Warranty Receipt");
-//                imageUri = getContentResolver().insert(
-//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//                //Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
-
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();

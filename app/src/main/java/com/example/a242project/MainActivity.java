@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -104,12 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 date_tv.setText(date);
             }
         };
+
         ArrayAdapter<CharSequence> spinnerAdapt = ArrayAdapter.createFromResource(
                 MainActivity.this,
                 R.array.itemCategory,
                 android.R.layout.simple_spinner_item);
         spinnerAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapt);
+
         //set camera on click
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }});
+
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         addwarrantybt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -213,43 +219,15 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//            Bundle extras = data.getExtras();
-//            Bitmap bitmap = (Bitmap) Objects.requireNonNull(extras).get("data");
-//            //Bitmap converted = bitmap.copy(Bitmap.Config.ARGB_8888, false);
-//            Bitmap converted = convert(bitmap, Bitmap.Config.ARGB_8888);
-//            myReceipt.setImageBitmap(converted);
-//            imageUri = getImageUri(getApplicationContext(), bitmap);
-                //Don't need this code i'm assuming, so delete when program is finished and we don't need to refer to this code
             }
         }
     }
-//    public String getRealPathFromURI(Uri contentUri) {
-//        String[] proj = { MediaStore.Images.Media.DATA };
-//        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-//        int column_index = cursor
-//                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        cursor.moveToFirst();
-//        return cursor.getString(column_index);
-//    }
-//    public Uri getImageUri(Context inContext, Bitmap inImage) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
-//        return Uri.parse(path);
-//    }
 
-//    private Bitmap convert(Bitmap bitmap, Bitmap.Config config) {
-//        Bitmap convertedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), config);
-//        Canvas canvas = new Canvas(convertedBitmap);
-//        Paint paint = new Paint();
-//        paint.setColor(Color.BLACK);
-//        canvas.drawBitmap(bitmap, 0, 0, paint);
-//        return convertedBitmap;
-//    }
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);
     }
+
     private Warranty encrypt(Warranty Data, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         SecretKeySpec key = generateKey(password);
         Cipher c = Cipher.getInstance(AES);
@@ -291,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
         return Data;
 
     }
+
     private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] bytes = password.getBytes("UTF-8");
@@ -300,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
         return secretKeySpec;
 
     }
+
     public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);

@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SelectedWarranty extends AppCompatActivity {
     TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay;
-    ImageView imageView;
+    ImageView myReceipt;
     Button deleteButton;
     String itemID;
     Uri imageUri;
@@ -39,7 +39,7 @@ public class SelectedWarranty extends AppCompatActivity {
         sellernameDisplay = findViewById(R.id.sellernameDisplay);
         sellerphoneDisplay = findViewById(R.id.sellerphoneDisplay);
         productnameDisplay = findViewById(R.id.productnameDisplay);
-        imageView = findViewById(R.id.myReceipt);
+        myReceipt = findViewById(R.id.myReceipt);
         deleteButton = findViewById(R.id.deleteButton);
 
         Intent i = getIntent();
@@ -54,7 +54,7 @@ public class SelectedWarranty extends AppCompatActivity {
         itemID = i.getStringExtra("pushid");
         byte[] decodedString = Base64.decode(i.getStringExtra("image").getBytes(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        imageView.setImageBitmap(decodedByte);
+        myReceipt.setImageBitmap(decodedByte);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class SelectedWarranty extends AppCompatActivity {
                 finish();
             }
         });
-        imageView.setOnClickListener(new View.OnClickListener() {
+        myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ContentValues values = new ContentValues();

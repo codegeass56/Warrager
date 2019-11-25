@@ -1,9 +1,12 @@
 package com.example.a242project;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -11,18 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectedWarranty extends AppCompatActivity {
     TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay;
     ImageView imageView;
     Button deleteButton;
     String itemID;
+    Uri imageUri;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,21 @@ public class SelectedWarranty extends AppCompatActivity {
                 warrantyRef.removeValue();
                 Toast.makeText(SelectedWarranty.this, "Warranty Deleted, Refresh to see changes", Toast.LENGTH_SHORT).show();
                 finish();
-
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, "New Receipt");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Warranty Receipt");
+                imageUri = getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                //Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(imageUri, "image/*");
+                startActivity(intent);
             }
         });
     }

@@ -4,20 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Output;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -43,12 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -146,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }});
-
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,11 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         addwarrantybt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //Make image into string, then pass into obj
                 myReceipt.buildDrawingCache();
                 Bitmap bmap = myReceipt.getDrawingCache();
@@ -172,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 bmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] b = baos.toByteArray();
                 String imageAsString = Base64.encodeToString(b, Base64.DEFAULT);
-
 
                 Warranty obj = new Warranty(sellernameET.getText().toString(), sellerphoneET.getText().toString(), selleremailET.getText().toString(),
                         date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString(), "", imageAsString);
@@ -197,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -226,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("D", "onActivityResult: " + "Added image");
                     myReceipt.setImageBitmap(thumbnail);
                     myReceipt.setRotation(90);
-                    String imageurl = getRealPathFromURI(imageUri);
+                    //String imageurl = getRealPathFromURI(imageUri);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -240,34 +223,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
-        return Uri.parse(path);
-    }
+//    public String getRealPathFromURI(Uri contentUri) {
+//        String[] proj = { MediaStore.Images.Media.DATA };
+//        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+//        int column_index = cursor
+//                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        cursor.moveToFirst();
+//        return cursor.getString(column_index);
+//    }
+//    public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Receipt", null);
+//        return Uri.parse(path);
+//    }
 
-    private Bitmap convert(Bitmap bitmap, Bitmap.Config config) {
-        Bitmap convertedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), config);
-        Canvas canvas = new Canvas(convertedBitmap);
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return convertedBitmap;
-    }
+//    private Bitmap convert(Bitmap bitmap, Bitmap.Config config) {
+//        Bitmap convertedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), config);
+//        Canvas canvas = new Canvas(convertedBitmap);
+//        Paint paint = new Paint();
+//        paint.setColor(Color.BLACK);
+//        canvas.drawBitmap(bitmap, 0, 0, paint);
+//        return convertedBitmap;
+//    }
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);
     }
-
     private Warranty encrypt(Warranty Data, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         SecretKeySpec key = generateKey(password);
         Cipher c = Cipher.getInstance(AES);
@@ -309,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
         return Data;
 
     }
-
     private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] bytes = password.getBytes("UTF-8");
@@ -327,5 +308,4 @@ public class MainActivity extends AppCompatActivity {
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
         return imgString;
     }
-
 }

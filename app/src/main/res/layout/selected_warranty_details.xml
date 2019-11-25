@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -191,7 +191,7 @@
         android:layout_marginTop="309dp"
         android:layout_toEndOf="@+id/myReceipt"
         android:adjustViewBounds="true"
-        android:text="Your Receipt" />
+        android:text="@string/userReceipt" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -203,8 +203,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="320dp"
         android:layout_marginTop="-3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="0dp"
-        android:text="Delete" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#CA0101"
+        android:text="Delete"
+        android:textColor="#FDF8F8"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

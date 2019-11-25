@@ -1,12 +1,9 @@
 package com.example.a242project;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +18,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+
 public class SelectedWarranty extends AppCompatActivity {
     TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay;
     ImageView myReceipt;
     Button deleteButton;
     String itemID;
-    Uri imageUri;
+    Bitmap decodedByte;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class SelectedWarranty extends AppCompatActivity {
         sellerphoneDisplay = findViewById(R.id.sellerphoneDisplay);
         productnameDisplay = findViewById(R.id.productnameDisplay);
         myReceipt = findViewById(R.id.myReceipt);
+
         deleteButton = findViewById(R.id.deleteButton);
 
         Intent i = getIntent();
@@ -53,7 +54,7 @@ public class SelectedWarranty extends AppCompatActivity {
         priceTv.setText(i.getStringExtra("productprice"));
         itemID = i.getStringExtra("pushid");
         byte[] decodedString = Base64.decode(i.getStringExtra("image").getBytes(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         myReceipt.setImageBitmap(decodedByte);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -74,15 +75,19 @@ public class SelectedWarranty extends AppCompatActivity {
         myReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "New Receipt");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "Warranty Receipt");
-                imageUri = getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                //Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setDataAndType(imageUri, "image/*");
+//                ContentValues values = new ContentValues();
+//                values.put(MediaStore.Images.Media.TITLE, "New Receipt");
+//                values.put(MediaStore.Images.Media.DESCRIPTION, "Warranty Receipt");
+//                imageUri = getContentResolver().insert(
+//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                //Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                Intent intent = new Intent(getApplicationContext(), FullReceipt.class);
+                intent.putExtra("picture", byteArray);
                 startActivity(intent);
             }
         });

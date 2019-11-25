@@ -11,5 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Login with Google" />
+        android:background="#F54633"
+        android:text="Login with Google"
+        android:textColor="#FFFFFF" />
 </RelativeLayout>

@@ -19,4 +19,5 @@
     <string name="emailHint">Email Address of the seller</string>
     <string name="productNameHint">Name of the product</string>
     <string name="emptyMessage">Nothing yet? Try adding!</string>
+    <string name="userReceipt"><b>Your Receipt</b></string>
 </resources>

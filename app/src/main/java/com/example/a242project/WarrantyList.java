@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -88,7 +90,7 @@ public class WarrantyList extends AppCompatActivity {
                                 Map<String, Object> currentWarrantyObject = (Map<String, Object>) warranty.get(childKey);
                                 Warranty currentWarranty = new Warranty(currentWarrantyObject.get("sellerName").toString(), currentWarrantyObject.get("sellerPhone").toString(),
                                         currentWarrantyObject.get("sellerEmail").toString(), currentWarrantyObject.get("dateOfPurchase").toString(), currentWarrantyObject.get("productName").toString(),
-                                        currentWarrantyObject.get("productCategory").toString(), currentWarrantyObject.get("productPrice").toString(), currentWarrantyObject.get("pushid").toString());
+                                        currentWarrantyObject.get("productCategory").toString(), currentWarrantyObject.get("productPrice").toString(), currentWarrantyObject.get("pushid").toString(), currentWarrantyObject.get("image").toString());
                                 Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
                                 warrantyList.add(decryptedWarranty);
                             }
@@ -106,6 +108,8 @@ public class WarrantyList extends AppCompatActivity {
                                     warrantyDetails.putExtra("productname",warrantyList.get((int)id).getProductName());
                                     warrantyDetails.putExtra("productcategory",warrantyList.get((int)id).getProductCategory());
                                     warrantyDetails.putExtra("productprice",warrantyList.get((int)id).getProductPrice());
+                                    warrantyDetails.putExtra("image",warrantyList.get((int)id).getImage());
+                                    warrantyDetails.putExtra("pushid",warrantyList.get((int)id).getPushid());
                                     startActivity(warrantyDetails);
                                 }
                             });
@@ -177,6 +181,11 @@ public class WarrantyList extends AppCompatActivity {
         decValue = c.doFinal(decodedValue);
         decryptedValue = new String (decValue);
         DataWarranty.setProductPrice(decryptedValue);
+
+        decodedValue = Base64.decode(DataWarranty.image, Base64.DEFAULT);
+        decValue = c.doFinal(decodedValue);
+        decryptedValue = new String (decValue);
+        DataWarranty.setImage(decryptedValue);
 
         return DataWarranty;
 

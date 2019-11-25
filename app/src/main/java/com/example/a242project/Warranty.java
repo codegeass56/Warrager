@@ -2,13 +2,14 @@ package com.example.a242project;
 
 import android.graphics.Bitmap;
 
+import java.io.File;
+
 @SuppressWarnings("ALL")
 class Warranty {
-    public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid;
+    public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid, image;
 
-    public Bitmap receipt;
     Warranty(){}
-    Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid)
+    Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid, String image)
     {
         this.sellerEmail = sellerEmail;
         this.dateOfPurchase = dateOfPurchase;
@@ -18,14 +19,7 @@ class Warranty {
         this.productPrice = productPrice;
         this.sellerPhone = sellerPhone;
         this.pushid = pushid;
-    }
-
-    public Bitmap getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(Bitmap receipt) {
-        this.receipt = receipt;
+        this.image = image;
     }
 
     public String getSellerName() {
@@ -91,4 +85,15 @@ class Warranty {
     public void setPushid(String pushid) {
         this.pushid = pushid;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
+
 }

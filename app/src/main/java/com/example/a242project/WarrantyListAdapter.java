@@ -39,7 +39,7 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         String productPrice = getItem(position).getProductPrice();
         String pushid = getItem(position).getPushid();
 
-        Warranty warranty = new Warranty(sellerName,sellerPhone,sellerEmail,dateOfPurchase,productName,productCategory,productPrice,pushid);
+        Warranty warranty = new Warranty(sellerName,sellerPhone,sellerEmail,dateOfPurchase,productName,productCategory,productPrice,pushid,"");
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);

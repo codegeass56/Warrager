@@ -27,7 +27,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:adjustViewBounds="true"
-        android:background="@null"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@mipmap/add_warranty_icon_round" />
 
     <TextView
@@ -39,15 +39,15 @@
         android:paddingTop="0dp"
         android:paddingEnd="0dp"
         android:layout_marginEnd="7dp"
-        android:text="Logout"
-        android:textColor="@color/colorPrimaryDark" />
+        android:text="@string/logoutLabel"
+        android:textColor="@color/black" />
 
     <ImageButton
         android:id="@+id/Logout"
         android:layout_width="57dp"
         android:layout_height="51dp"
         android:layout_alignParentEnd="true"
-        android:background="@null"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/logout_icon"/>
 
 

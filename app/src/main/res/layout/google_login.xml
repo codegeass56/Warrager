@@ -8,10 +8,10 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#F54633"
-        android:text="Login with Google"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/login_ripple_effect"
+        android:text="@string/loginMessage"
+        android:textColor="@color/white" />
 </RelativeLayout>

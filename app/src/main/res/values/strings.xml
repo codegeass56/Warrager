@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Warranty Manager</string>
+    <string name="app_name">Warrager</string>
     <string name="date_format">dd/mm/yyyy</string>
     <string name="dateLabel"><b>Date of purchase:</b></string>
     <string name="priceLabel"><b>Total Price (VAT inclusive):</b></string>
@@ -14,13 +14,15 @@
     <string name="sellerEmailLabel"><b>Seller Email:</b></string>
     <string name="productNameLabel"><b>Product Name:</b></string>
     <string name="purchaseLocationLabel"><b>Purchase Location:</b></string>
+    <string name="logoutLabel">Logout</string>
     <string name="priceHint">Product Price</string>
     <string name="nameHint">Name of the seller</string>
     <string name="numberHint">Phone number of the seller</string>
     <string name="emailHint">Email Address of the seller</string>
     <string name="productNameHint">Name of the product</string>
     <string name="purchaseLocationHint">Purchase Location</string>
-    <string name="emptyMessage">Nothing yet? Try adding!</string>
+    <string name="emptyMessage">Nothing yet? Try adding a new warranty!</string>
     <string name="userReceipt"><b>Your Receipt</b></string>
     <string name="title_activity_maps">Map</string>
+    <string name="loginMessage">Login with Google</string>
 </resources>

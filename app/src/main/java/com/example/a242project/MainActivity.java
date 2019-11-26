@@ -42,7 +42,6 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
-import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Dialog_MinWidth,
                         dateSetListener,
                         year,month,day);
-                Objects.requireNonNull(datePickerDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
             }
         });
@@ -145,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(imageUri!=null)
                 {
-                    //Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.setDataAndType(imageUri, "image/*");
@@ -195,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == reqCode){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                // main logic
                 Intent capture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(capture.resolveActivity(getPackageManager())!=null) {
                     startActivityForResult(capture,reqCode);
@@ -218,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("D", "onActivityResult: " + "Added image");
                     myReceipt.setImageBitmap(thumbnail);
                     myReceipt.setRotation(90);
-                    //String imageurl = getRealPathFromURI(imageUri);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -228,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

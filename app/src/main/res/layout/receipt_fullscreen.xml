@@ -20,7 +20,7 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/back_icon"
         tools:layout_editor_absoluteX="369dp"
         tools:layout_editor_absoluteY="0dp"

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@SuppressWarnings("ALL")
 public class FullReceipt extends AppCompatActivity {
     ImageView myFullReceipt;
     ImageButton backButton;

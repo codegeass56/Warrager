@@ -228,9 +228,9 @@
         android:layout_marginTop="-3dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:background="#CA0101"
+        android:background="@drawable/delete_ripple_effect"
         android:text="Delete"
-        android:textColor="#FDF8F8"
+        android:textColor="@color/white"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>

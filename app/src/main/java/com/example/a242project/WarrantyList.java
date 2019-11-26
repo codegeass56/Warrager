@@ -42,7 +42,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 @SuppressWarnings("ALL")
 public class WarrantyList extends AppCompatActivity {
-
     private static final String TAG = "MainActivity";
     private ImageButton logout;
     private ImageButton goToAddWarranty;
@@ -53,6 +52,7 @@ public class WarrantyList extends AppCompatActivity {
     private ArrayList<Warranty> warrantyList;
     private ListView mListView;
     private WarrantyListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +96,6 @@ public class WarrantyList extends AppCompatActivity {
                                 Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
                                 warrantyList.add(decryptedWarranty);
                             }
-                            //Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
                             adapter = new WarrantyListAdapter(mContext, R.layout.warranty_listitem, warrantyList);
                             mListView.setAdapter(adapter);
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,10 +142,12 @@ public class WarrantyList extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+//    @Override
+//    protected void onStop () {
+//        super .onStop() ;
+//        Toast.makeText(this,"onstop",Toast.LENGTH_SHORT).show();
+//        startService( new Intent( this, NotificationService. class )) ;
+//    }
 
     private Warranty decrypt(Warranty DataWarranty, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
@@ -212,13 +213,14 @@ public class WarrantyList extends AppCompatActivity {
 
     private void openLogin() {
         Intent intent = new Intent(this, Login.class );
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     private void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class );
         startActivity(intent);
-        finish();
     }
 
     private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException {

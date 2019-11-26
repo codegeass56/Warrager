@@ -142,13 +142,6 @@ public class WarrantyList extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onStop () {
-//        super .onStop() ;
-//        Toast.makeText(this,"onstop",Toast.LENGTH_SHORT).show();
-//        startService( new Intent( this, NotificationService. class )) ;
-//    }
-
     private Warranty decrypt(Warranty DataWarranty, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         SecretKeySpec key = generateKey(password);

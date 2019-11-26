@@ -51,11 +51,14 @@ public class WarrantyList extends AppCompatActivity {
     private TextView emptyListMessage;
     private Context mContext;
     private ArrayList<Warranty> warrantyList;
+    private ListView mListView;
+    private WarrantyListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.warranty_listview);
         emptyListMessage = findViewById(R.id.emptyListMessage);
+
         mContext = this;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder()
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -66,7 +69,7 @@ public class WarrantyList extends AppCompatActivity {
         goToAddWarranty = findViewById(R.id.goToAddWarranty);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        ListView mListView = (ListView) findViewById(R.id.mListView);
+        mListView = (ListView) findViewById(R.id.mListView);
 
         DatabaseReference warrantyRef = FirebaseDatabase
                 .getInstance()
@@ -88,12 +91,13 @@ public class WarrantyList extends AppCompatActivity {
                                 Map<String, Object> currentWarrantyObject = (Map<String, Object>) warranty.get(childKey);
                                 Warranty currentWarranty = new Warranty(currentWarrantyObject.get("sellerName").toString(), currentWarrantyObject.get("sellerPhone").toString(),
                                         currentWarrantyObject.get("sellerEmail").toString(), currentWarrantyObject.get("dateOfPurchase").toString(), currentWarrantyObject.get("productName").toString(),
-                                        currentWarrantyObject.get("productCategory").toString(), currentWarrantyObject.get("productPrice").toString(), currentWarrantyObject.get("pushid").toString(), currentWarrantyObject.get("image").toString());
+                                        currentWarrantyObject.get("productCategory").toString(), currentWarrantyObject.get("productPrice").toString(), currentWarrantyObject.get("pushid").toString(), currentWarrantyObject.get("image").toString(),
+                                        currentWarrantyObject.get("purchaseLocation").toString());
                                 Warranty decryptedWarranty = decrypt(currentWarranty, "zxcasdqwe");
                                 warrantyList.add(decryptedWarranty);
                             }
                             //Log.d(TAG, "onDataChange: " + warrantyList.get(0).getProductCategory());
-                            WarrantyListAdapter adapter = new WarrantyListAdapter(mContext, R.layout.warranty_listitem, warrantyList);
+                            adapter = new WarrantyListAdapter(mContext, R.layout.warranty_listitem, warrantyList);
                             mListView.setAdapter(adapter);
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -108,6 +112,7 @@ public class WarrantyList extends AppCompatActivity {
                                     warrantyDetails.putExtra("productprice",warrantyList.get((int)id).getProductPrice());
                                     warrantyDetails.putExtra("image",warrantyList.get((int)id).getImage());
                                     warrantyDetails.putExtra("pushid",warrantyList.get((int)id).getPushid());
+                                    warrantyDetails.putExtra("purchaseLocation",warrantyList.get((int)id).getPurchaseLocation());
                                     startActivity(warrantyDetails);
                                 }
                             });
@@ -136,6 +141,11 @@ public class WarrantyList extends AppCompatActivity {
                 openMainActivity();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private Warranty decrypt(Warranty DataWarranty, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -208,6 +218,7 @@ public class WarrantyList extends AppCompatActivity {
     private void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class );
         startActivity(intent);
+        finish();
     }
 
     private SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException {

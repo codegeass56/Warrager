@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,8 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 
+@SuppressWarnings("ALL")
 public class SelectedWarranty extends AppCompatActivity {
-    TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay;
+    TextView date_tv, priceTv, categorySpinnerTv, sellernameDisplay, selleremailDisplay, sellerphoneDisplay, productnameDisplay,purchaseLocationDisplay;
     ImageView myReceipt;
     Button deleteButton;
     String itemID;
@@ -39,6 +39,7 @@ public class SelectedWarranty extends AppCompatActivity {
         sellernameDisplay = findViewById(R.id.sellernameDisplay);
         sellerphoneDisplay = findViewById(R.id.sellerphoneDisplay);
         productnameDisplay = findViewById(R.id.productnameDisplay);
+        purchaseLocationDisplay = findViewById(R.id.purchaseLocationDisplay);
         myReceipt = findViewById(R.id.myReceipt);
 
         deleteButton = findViewById(R.id.deleteButton);
@@ -52,6 +53,7 @@ public class SelectedWarranty extends AppCompatActivity {
         productnameDisplay.setText(i.getStringExtra("productname"));
         date_tv.setText(i.getStringExtra("dateofpurchase"));
         priceTv.setText(i.getStringExtra("productprice"));
+        purchaseLocationDisplay.setText(i.getStringExtra("purchaseLocation"));
         itemID = i.getStringExtra("pushid");
         byte[] decodedString = Base64.decode(i.getStringExtra("image").getBytes(), Base64.DEFAULT);
         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -68,7 +70,9 @@ public class SelectedWarranty extends AppCompatActivity {
                         .getReference("Warranty")
                         .child(uid).child(itemID);
                 warrantyRef.removeValue();
-                Toast.makeText(SelectedWarranty.this, "Warranty Deleted, Refresh to see changes", Toast.LENGTH_SHORT).show();
+                Intent listView = new Intent(getApplicationContext(),WarrantyList.class);
+                listView.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(listView);
                 finish();
             }
         });

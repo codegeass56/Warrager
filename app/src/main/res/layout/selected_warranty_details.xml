@@ -56,7 +56,7 @@
         android:layout_below="@+id/myReceipt"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="11dp"
         android:layout_marginEnd="170dp"
         android:layout_toEndOf="@+id/sellername_tv"
         android:hint="@string/nameHint"
@@ -108,6 +108,20 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:textSize="14sp" />
+    <TextView
+        android:id="@+id/purchaseLocationDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/productnameDisplay"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="96dp"
+        android:layout_toEndOf="@+id/productname_tv"
+        android:hint="@string/purchaseLocationHint"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/categoryLabel"
@@ -126,7 +140,7 @@
         android:layout_below="@+id/myReceipt"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/sellerNameLabel" />
 
     <TextView
@@ -158,6 +172,15 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
         android:text="@string/productNameLabel" />
+    <TextView
+        android:id="@+id/purchaselocation_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productname_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/purchaseLocationLabel" />
 
     <TextView
         android:id="@+id/categorySpinnerTv"
@@ -197,7 +220,7 @@
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/productnameDisplay"
+        android:layout_below="@+id/purchaseLocationDisplay"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"

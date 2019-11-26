@@ -1,15 +1,20 @@
 package com.example.a242project;
 
-import android.graphics.Bitmap;
-
-import java.io.File;
-
 @SuppressWarnings("ALL")
 class Warranty {
-    public String sellerName, sellerPhone, sellerEmail, dateOfPurchase, productName, productCategory, productPrice, pushid, image;
+    public String sellerName;
+    public String sellerPhone;
+    public String sellerEmail;
+    public String dateOfPurchase;
+    public String productName;
+    public String productCategory;
+    public String productPrice;
+    public String pushid;
+    public String image;
+    public String purchaseLocation;
 
     Warranty(){}
-    Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid, String image)
+    Warranty(String sellerName, String sellerPhone, String sellerEmail, String dateOfPurchase, String productName, String productCategory, String productPrice, String pushid, String image,String purchaseLocation)
     {
         this.sellerEmail = sellerEmail;
         this.dateOfPurchase = dateOfPurchase;
@@ -20,6 +25,15 @@ class Warranty {
         this.sellerPhone = sellerPhone;
         this.pushid = pushid;
         this.image = image;
+        this.purchaseLocation = purchaseLocation;
+    }
+
+    public String getPurchaseLocation() {
+        return purchaseLocation;
+    }
+
+    public void setPurchaseLocation(String purchaseLocation) {
+        this.purchaseLocation = purchaseLocation;
     }
 
     public String getSellerName() {

@@ -38,8 +38,9 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         String productCategory = getItem(position).getProductCategory();
         String productPrice = getItem(position).getProductPrice();
         String pushid = getItem(position).getPushid();
+        String purchaseLocation = getItem(position).getPurchaseLocation();
 
-        Warranty warranty = new Warranty(sellerName,sellerPhone,sellerEmail,dateOfPurchase,productName,productCategory,productPrice,pushid,"");
+        Warranty warranty = new Warranty(sellerName,sellerPhone,sellerEmail,dateOfPurchase,productName,productCategory,productPrice,pushid,"",purchaseLocation);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);
@@ -51,6 +52,7 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         TextView tvProductName = (TextView) convertView.findViewById(R.id.tvProductName);
         TextView tvCategory = (TextView) convertView.findViewById(R.id.tvProductCategory);
         TextView tvProductPrice = (TextView) convertView.findViewById(R.id.tvProductPrice);
+        TextView tvPurchaseLocation = (TextView) convertView.findViewById(R.id.tvPurchaseLocation);
 
         tvSellerName.setText(sellerName);
         tvSellerPhone.setText(sellerPhone);
@@ -59,6 +61,7 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         tvProductName.setText(productName);
         tvCategory.setText(productCategory);
         tvProductPrice.setText(productPrice);
+        tvPurchaseLocation.setText(purchaseLocation);
 
         return convertView;
 

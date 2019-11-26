@@ -86,6 +86,16 @@
         android:layout_marginEnd="125dp"
         android:layout_toEndOf="@+id/priceLabel"
         />
+    <TextView
+        android:id="@+id/tvPurchaseLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvProductPrice"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="125dp"
+        android:layout_toEndOf="@+id/purchaseLocationLabel"
+        />
 
     <TextView
         android:id="@+id/snameLabel"
@@ -156,6 +166,15 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:text="@string/priceLabel" />
+    <TextView
+        android:id="@+id/purchaseLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/priceLabel"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/purchaseLocationLabel" />
 
 
 </RelativeLayout>

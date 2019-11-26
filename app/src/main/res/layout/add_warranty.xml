@@ -118,7 +118,22 @@
         android:paddingTop="0dp"
         android:paddingBottom="5dp"
         android:textSize="14sp" />
-
+    <EditText
+        android:id="@+id/purchaseLocationET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/productnameET"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="98dp"
+        android:layout_toEndOf="@+id/sellerphone_tv"
+        android:hint="@string/purchaseLocationHint"
+        android:inputType="text"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
     <TextView
         android:id="@+id/categoryLabel"
         android:layout_width="wrap_content"
@@ -168,6 +183,15 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
         android:text="@string/productNameLabel" />
+    <TextView
+        android:id="@+id/purchaseLocation_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productname_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/purchaseLocationLabel" />
 
     <Spinner
         android:id="@+id/categorySpinner"

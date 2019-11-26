@@ -13,11 +13,14 @@
     <string name="sellerPhoneLabel"><b>Seller Phone:</b></string>
     <string name="sellerEmailLabel"><b>Seller Email:</b></string>
     <string name="productNameLabel"><b>Product Name:</b></string>
+    <string name="purchaseLocationLabel"><b>Purchase Location:</b></string>
     <string name="priceHint">Product Price</string>
     <string name="nameHint">Name of the seller</string>
     <string name="numberHint">Phone number of the seller</string>
     <string name="emailHint">Email Address of the seller</string>
     <string name="productNameHint">Name of the product</string>
+    <string name="purchaseLocationHint">Purchase Location</string>
     <string name="emptyMessage">Nothing yet? Try adding!</string>
     <string name="userReceipt"><b>Your Receipt</b></string>
+    <string name="title_activity_maps">Map</string>
 </resources>

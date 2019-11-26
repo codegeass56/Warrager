@@ -54,6 +54,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_NAME_ENC = "Warranty_Photo";
     TextView date_tv;
+    EditText purchaseLocationET;
     Button addwarrantybt;
     EditText priceEditText, sellernameET, sellerphoneET, selleremailET, productnameET;
     Spinner categorySpinner;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         sellernameET = findViewById(R.id.sellernameET);
         productnameET = findViewById(R.id.productnameET);
         addwarrantybt = findViewById(R.id.addwarrantybt);
+        purchaseLocationET = findViewById(R.id.purchaseLocationET);
         warranty = FirebaseDatabase.getInstance().getReference().child("Warranty");
 
         date_tv.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 String imageAsString = Base64.encodeToString(b, Base64.DEFAULT);
 
                 Warranty obj = new Warranty(sellernameET.getText().toString(), sellerphoneET.getText().toString(), selleremailET.getText().toString(),
-                        date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString(), "", imageAsString);
+                        date_tv.getText().toString(), productnameET.getText().toString(), categorySpinner.getSelectedItem().toString(), priceEditText.getText().toString(), "", imageAsString,
+                        purchaseLocationET.getText().toString());
                 //encrypt object
                 try {
                     Warranty encryptedObj = encrypt(obj,"zxcasdqwe");
@@ -226,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     private void openWarrantyList() {
         Intent intent = new Intent(this, WarrantyList.class );
         startActivity(intent);
+        finish();
     }
 
     private Warranty encrypt(Warranty Data, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {

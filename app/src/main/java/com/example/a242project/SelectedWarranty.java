@@ -3,6 +3,7 @@ package com.example.a242project;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -54,6 +55,7 @@ public class SelectedWarranty extends AppCompatActivity {
         date_tv.setText(i.getStringExtra("dateofpurchase"));
         priceTv.setText(i.getStringExtra("productprice"));
         purchaseLocationDisplay.setText(i.getStringExtra("purchaseLocation"));
+
         itemID = i.getStringExtra("pushid");
         byte[] decodedString = Base64.decode(i.getStringExtra("image").getBytes(), Base64.DEFAULT);
         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -86,6 +88,16 @@ public class SelectedWarranty extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FullReceipt.class);
                 intent.putExtra("picture", byteArray);
                 startActivity(intent);
+            }
+        });
+        purchaseLocationDisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String location = purchaseLocationDisplay.getText().toString();
+                location = location.replace(" ", "+");
+
+                Intent i = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + location));
+                startActivity(i);
             }
         });
     }

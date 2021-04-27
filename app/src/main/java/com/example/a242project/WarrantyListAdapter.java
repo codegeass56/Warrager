@@ -64,6 +64,5 @@ class WarrantyListAdapter extends ArrayAdapter<Warranty> {
         tvPurchaseLocation.setText(purchaseLocation);
 
         return convertView;
-
     }
 }
